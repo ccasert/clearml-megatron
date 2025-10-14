@@ -19,7 +19,8 @@ task.execute_remotely()
 
 # Actual work
 
-repo_path ="$SCRATCH/Megatron-LM"
+scratch = os.environ.get('SCRATCH')
+repo_path = f"{scratch}/Megatron-LM"
 
 if os.path.exists(repo_path):
     print(f"Megatron-LM already exists at {repo_path}, skipping clone")
