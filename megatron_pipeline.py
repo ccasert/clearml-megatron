@@ -49,6 +49,21 @@ pipe.add_step(
     post_execute_callback=post_execute_callback,
 )
 
+pipe.add_step(
+    name='tokenize data',
+    parents=['clone_megatron', 'download_data'],
+    base_task_project='Megatron',
+    base_task_name='tokenize-data-step',
+    parameter_override={
+        'General/MEGATRON_DIR': '${clone_megatron.artifacts.megatron_dir}',
+        'General/DATA_DIR': '${download_data.artifacts.data_dir}',
+        'General/TOKENIZER_DIR': '${download_data.artifacts.tokenizer_dir}',
+    },
+    cache_executed_step=True,
+    pre_execute_callback=pre_execute_callback,
+    post_execute_callback=post_execute_callback,
+)
+
 
 # Start the pipeline
 pipe.start(queue = "muller")
