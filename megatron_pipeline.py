@@ -29,7 +29,7 @@ pipe = PipelineController(
 # Set default execution queue
 pipe.set_default_execution_queue("muller")
 
-# Step 1: Clone Megatron-LM
+# Step 1a: Clone Megatron-LM
 pipe.add_step(
     name='clone_megatron',
     base_task_project='Megatron',
@@ -38,6 +38,17 @@ pipe.add_step(
     pre_execute_callback=pre_execute_callback,
     post_execute_callback=post_execute_callback,
 )
+
+#Step 1b: download data
+pipe.add_step(
+    name='download_data',
+    base_task_project='Megatron',
+    base_task_name='download-data-step',
+    cache_executed_step=True,
+    pre_execute_callback=pre_execute_callback,
+    post_execute_callback=post_execute_callback,
+)
+
 
 # Start the pipeline
 pipe.start(queue = "muller")

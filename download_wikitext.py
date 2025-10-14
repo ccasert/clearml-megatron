@@ -1,12 +1,16 @@
 import os
 from datasets import load_dataset
 from transformers import GPT2TokenizerFast
+from clearml import Task
 
-HF_HOME = "$SCRATCH/cache/huggingface"
-DATA_DIR = "$SCRATCH/data/wikitext"
+# Get current task (created by the bash wrapper task)
+task = Task.current_task()
+
+
+scratch = os.environ.get('SCRATCH')
+DATA_DIR = f"{scratch}/data/wikitext"
 
 # set hf home and make data dir
-os.environ["HF_HOME"] = HF_HOME
 os.makedirs(DATA_DIR, exist_ok=True)
 
 # tokenization rules
@@ -27,3 +31,8 @@ dataset['test'].to_json(os.path.join(DATA_DIR, "wikitext103_test.json"), orient=
 print("Downloading GPT-2 tokenizer...")
 tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
 tokenizer.save_pretrained(TOKENIZER_DIR)
+
+task.upload_artifact('data_dir', DATA_DIR)
+task.upload_artifact('tokenizer_dir', TOKENIZER_DIR)
+
+print('Done')
