@@ -31,7 +31,7 @@ pipe.set_default_execution_queue("muller")
 
 # Step 1a: Clone Megatron-LM
 pipe.add_step(
-    name='clone megatron',
+    name='clone_megatron',
     base_task_project='Megatron',
     base_task_name='clone-megatron-step',
     cache_executed_step=True,
@@ -41,7 +41,7 @@ pipe.add_step(
 
 #Step 1b: download data
 pipe.add_step(
-    name='download data',
+    name='download_data',
     base_task_project='Megatron',
     base_task_name='download-data-step',
     cache_executed_step=True,
@@ -49,9 +49,9 @@ pipe.add_step(
     post_execute_callback=post_execute_callback,
 )
 
-#Step 2: tokenize data
+#Step 2: tokenize
 pipe.add_step(
-    name='tokenize data',
+    name='tokenize_data',
     parents=['clone_megatron', 'download_data'],
     base_task_project='Megatron',
     base_task_name='tokenize-data-step',
