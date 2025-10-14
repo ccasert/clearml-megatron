@@ -4,7 +4,7 @@ from transformers import GPT2TokenizerFast
 from clearml import Task
 
 # Get current task (created by the bash wrapper task)
-task = Task.current_task()
+task = Task.init(project_name="Megatron", task_name="download-data-step")
 
 
 scratch = os.environ.get('SCRATCH')
