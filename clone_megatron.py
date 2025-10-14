@@ -21,3 +21,6 @@ def clone_megatron_repo() -> str:
 
     os.environ["HOST_MEGATRON_LM_DIR"] = repo_path
     return repo_path
+
+if __name__ == "__main__":
+    clone_megatron_repo()

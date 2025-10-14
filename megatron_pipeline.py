@@ -7,7 +7,8 @@ def main():
     pipe = PipelineController(
         name="Megatron-LM Pipeline",
         project="Megatron",
-        version="1.0.0"
+        version="1.0.0",
+        target_project = "Megatron"
     )
 
     # Set default execution queue
