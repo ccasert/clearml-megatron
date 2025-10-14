@@ -11,8 +11,8 @@ def main():
         target_project = "Megatron"
     )
 
-    # Set default execution queue
-    pipe.set_default_execution_queue('muller')
+    # # Set default execution queue
+    # pipe.set_default_execution_queue('muller')
 
     # Step 1: Clone Megatron-LM
     pipe.add_function_step(
@@ -20,6 +20,7 @@ def main():
         function=clone_megatron_repo,
         function_return=['megatron_dir'],
         cache_executed_step=True,
+        execution_queue='muller',
     )
 
     # Start the pipeline
