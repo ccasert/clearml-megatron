@@ -22,4 +22,5 @@ def clone_megatron_repo() -> str:
     return repo_path
 
 if __name__ == "__main__":
+    print("Hello world from python")
     clone_megatron_repo()
