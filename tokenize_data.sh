@@ -9,26 +9,31 @@ module load pytorch/2.6.0
 
 pip install clearml
 
-# Use Python to extract ClearML task parameters and export them
-# Redirect Task.init output to stderr, only print exports to stdout
-eval $(python - <<'EOF' 2>&1 >/dev/null
-import sys
-from clearml import Task
+# # Use Python to extract ClearML task parameters and export them
+# # Redirect Task.init output to stderr, only print exports to stdout
+# eval $(python - <<'EOF' 2>&1 >/dev/null
+# import sys
+# from clearml import Task
 
-# Redirect Task.init output
-task = Task.init(project_name="Megatron", task_name="tokenize-data-step", reuse_last_task_id=True)
-params = task.get_parameters_as_dict()
+# # Redirect Task.init output
+# task = Task.init(project_name="Megatron", task_name="tokenize-data-step", reuse_last_task_id=True)
+# params = task.get_parameters_as_dict()
 
-megatron_dir = params.get('General', {}).get('MEGATRON_DIR', '')
-data_dir = params.get('General', {}).get('DATA_DIR', '')
-tokenizer_dir = params.get('General', {}).get('TOKENIZER_DIR', '')
+# megatron_dir = params.get('General', {}).get('MEGATRON_DIR', '')
+# data_dir = params.get('General', {}).get('DATA_DIR', '')
+# tokenizer_dir = params.get('General', {}).get('TOKENIZER_DIR', '')
 
-# Print exports to stdout (which is redirected back)
-print(f"export MEGATRON_DIR='{megatron_dir}'", file=sys.stderr)
-print(f"export DATA_DIR='{data_dir}'", file=sys.stderr)
-print(f"export TOKENIZER_DIR='{tokenizer_dir}'", file=sys.stderr)
-EOF
-)
+# # Print exports to stdout (which is redirected back)
+# print(f"export MEGATRON_DIR='{megatron_dir}'", file=sys.stderr)
+# print(f"export DATA_DIR='{data_dir}'", file=sys.stderr)
+# print(f"export TOKENIZER_DIR='{tokenizer_dir}'", file=sys.stderr)
+# EOF
+# )
+
+SCRATCH_DIR="${SCRATCH}"
+MEGATRON_DIR="${SCRATCH_DIR}/Megatron-LM"
+DATA_DIR="${SCRATCH_DIR}/data/wikitext"
+TOKENIZER_DIR="${DATA_DIR}/tokenizer_gpt2"
 
 echo "Megatron directory: ${MEGATRON_DIR}"
 echo "Data directory: ${DATA_DIR}"
