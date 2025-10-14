@@ -40,6 +40,6 @@ pipe.add_step(
 )
 
 # Start the pipeline
-pipe.start_locally()
+pipe.start(queue = "Muller")
 
 print("Pipeline started!")
