@@ -13,7 +13,7 @@ def clone_megatron_repo() -> str:
     else:
         print(f"Cloning Megatron-LM to {repo_path}...")
         subprocess.run(
-            f"git clone git@github.com:NVIDIA/Megatron-LM.git {repo_path}",
+            f"git clone https://github.com/NVIDIA/Megatron-LM.git {repo_path}",
             shell=True,
             check=True
         )
