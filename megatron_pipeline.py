@@ -31,7 +31,7 @@ pipe.set_default_execution_queue("muller")
 
 # Step 1a: Clone Megatron-LM
 pipe.add_step(
-    name='clone_megatron',
+    name='clone megatron',
     base_task_project='Megatron',
     base_task_name='clone-megatron-step',
     cache_executed_step=True,
@@ -41,7 +41,7 @@ pipe.add_step(
 
 #Step 1b: download data
 pipe.add_step(
-    name='download_data',
+    name='download data',
     base_task_project='Megatron',
     base_task_name='download-data-step',
     cache_executed_step=True,

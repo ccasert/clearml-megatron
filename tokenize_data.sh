@@ -2,7 +2,7 @@
 
 set -ex
 
-echo "Preprocessing data step"
+echo "Tokenizing data step"
 
 unset PYTHONPATH
 module load pytorch/2.6.0
@@ -10,9 +10,12 @@ module load pytorch/2.6.0
 pip install clearml
 
 # Use Python to extract ClearML task parameters and export them
-eval $(python - <<'EOF'
+# Redirect Task.init output to stderr, only print exports to stdout
+eval $(python - <<'EOF' 2>&1 >/dev/null
+import sys
 from clearml import Task
 
+# Redirect Task.init output
 task = Task.init(project_name="Megatron", task_name="tokenize-data-step", reuse_last_task_id=True)
 params = task.get_parameters_as_dict()
 
@@ -20,9 +23,10 @@ megatron_dir = params.get('General', {}).get('MEGATRON_DIR', '')
 data_dir = params.get('General', {}).get('DATA_DIR', '')
 tokenizer_dir = params.get('General', {}).get('TOKENIZER_DIR', '')
 
-print(f"export MEGATRON_DIR='{megatron_dir}'")
-print(f"export DATA_DIR='{data_dir}'")
-print(f"export TOKENIZER_DIR='{tokenizer_dir}'")
+# Print exports to stdout (which is redirected back)
+print(f"export MEGATRON_DIR='{megatron_dir}'", file=sys.stderr)
+print(f"export DATA_DIR='{data_dir}'", file=sys.stderr)
+print(f"export TOKENIZER_DIR='{tokenizer_dir}'", file=sys.stderr)
 EOF
 )
 
@@ -38,4 +42,4 @@ python ${MEGATRON_DIR}/tools/preprocess_data.py \
     --append-eod \
     --workers 4
 
-echo "Preprocessing complete"
+echo "Tokenization complete"
