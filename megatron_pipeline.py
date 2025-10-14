@@ -40,6 +40,6 @@ pipe.add_step(
 )
 
 # Start the pipeline
-pipe.start(queue = "Muller")
+pipe.start(queue = "muller")
 
 print("Pipeline started!")
