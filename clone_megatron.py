@@ -5,8 +5,7 @@ import subprocess
 def clone_megatron_repo() -> str:
     """Clone Megatron-LM repository if it doesn't already exist"""
 
-    scratch = os.environ.get('SCRATCH')
-    repo_path = f"{scratch}/Megatron-LM"
+    repo_path = f"/mscratch/sd/c/ccasert/Megatron-LM"
 
     # Only clone if directory doesn't exist
     if os.path.exists(repo_path):
