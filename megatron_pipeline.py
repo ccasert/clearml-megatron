@@ -49,6 +49,7 @@ pipe.add_step(
     post_execute_callback=post_execute_callback,
 )
 
+#Step 2: tokenize data
 pipe.add_step(
     name='tokenize data',
     parents=['clone_megatron', 'download_data'],
