@@ -23,7 +23,7 @@ MERGE_FILE=${SCRATCH}/data/wikitext/tokenizer_gpt2/merges.txt
 DATA_PATH=${SCRATCH}/data/wikitext/wikitext103_gpt2_text_document
 
 
-mkdir -p ${SCRATCH_PATH}/logs
+# mkdir -p ${SCRATCH_PATH}/logs
 mkdir -p ${CHECKPOINT_PATH}
 mkdir -p ${TENSORBOARD_LOGS_PATH}
 
