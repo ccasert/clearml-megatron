@@ -4,11 +4,17 @@ set -ex
 
 echo "Training step"
 
-unset PYTHONPATH
-module load pytorch/2.6.0
 
-pip install clearml
-pip install --no-build-isolation transformer_engine[pytorch]
+# Container configuration
+SHIFTER_IMAGE=nersc/pytorch:25.02.01
+SHIFTER_MODULES=gpu,nccl-plugin
+
+# Unset ClearML agent's python setup
+unset PYTHONPATH
+
+export PYTHONUSERBASE=".local/clearml-megatron"
+shifter --image=$SHIFTER_IMAGE --module=$SHIFTER_MODULES \
+    bash -c "pip install clearml"
 
 
 export CUDA_DEVICE_MAX_CONNECTIONS=1
@@ -82,9 +88,15 @@ EVAL_AND_LOGGING_ARGS=(
     --tensorboard-dir $TENSORBOARD_LOGS_PATH
 )
 
-srun torchrun ${DISTRIBUTED_ARGS[@]} ${SCRATCH}/Megatron-LM/pretrain_gpt.py \
+
+cmd="torchrun ${DISTRIBUTED_ARGS[@]} pretrain_gpt.py \
     ${GPT_MODEL_ARGS[@]} \
     ${TRAINING_ARGS[@]} \
     ${MODEL_PARALLEL_ARGS[@]} \
     ${DATA_ARGS[@]} \
-    ${EVAL_AND_LOGGING_ARGS[@]}
+    ${EVAL_AND_LOGGING_ARGS[@]}"
+
+echo "${cmd}"
+
+shifter --image=$SHIFTER_IMAGE --module=$SHIFTER_MODULES \
+    bash -c "$cmd"
