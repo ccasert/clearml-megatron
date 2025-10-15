@@ -32,9 +32,8 @@ pipe.set_default_execution_queue("muller")
 # Step 1a: Clone Megatron-LM
 pipe.add_step(
     name='clone_megatron',
-    # base_task_project='Megatron',
-    # base_task_name='clone-megatron-step',
-    base_task_id ='3101ab4cae384916a78c4e68368f60eb',
+    base_task_project='Megatron',
+    base_task_name='clone-megatron-step',
     cache_executed_step=True,
     pre_execute_callback=pre_execute_callback,
     post_execute_callback=post_execute_callback,
@@ -43,9 +42,8 @@ pipe.add_step(
 #Step 1b: download data
 pipe.add_step(
     name='download_data',
-    # base_task_project='Megatron',
-    # base_task_name='download-data-step',
-    base_task_id='b49cb51d63104b7cbee088bf4932f179',
+    base_task_project='Megatron',
+    base_task_name='download-data-step',
     cache_executed_step=True,
     pre_execute_callback=pre_execute_callback,
     post_execute_callback=post_execute_callback,
@@ -55,9 +53,8 @@ pipe.add_step(
 pipe.add_step(
     name='tokenize_data',
     parents=['clone_megatron', 'download_data'],
-    # base_task_project='Megatron',
-    # base_task_name='tokenize-data-step',
-    base_task_id='78d003c48804451e8be5075623301b49',
+    base_task_project='Megatron',
+    base_task_name='tokenize-data-step',
     parameter_override={
         'General/MEGATRON_DIR': '${clone_megatron.artifacts.megatron_dir}',
         'General/DATA_DIR': '${download_data.artifacts.data_dir}',
