@@ -12,7 +12,7 @@ pip install clearml
 
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 export OMP_NUM_THREADS=1
-export MASTER_ADDR=$(hostname)
+export MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
 export MASTER_PORT=29500
 export HF_HOME=${SCRATCH}/cache/huggingface
 
@@ -80,13 +80,9 @@ EVAL_AND_LOGGING_ARGS=(
     --tensorboard-dir $TENSORBOARD_LOGS_PATH
 )
 
-cmd="torchrun ${DISTRIBUTED_ARGS[@]} pretrain_gpt.py \
+srun torchrun ${DISTRIBUTED_ARGS[@]} pretrain_gpt.py \
     ${GPT_MODEL_ARGS[@]} \
     ${TRAINING_ARGS[@]} \
     ${MODEL_PARALLEL_ARGS[@]} \
     ${DATA_ARGS[@]} \
-    ${EVAL_AND_LOGGING_ARGS[@]}"
-
-echo "${cmd}"
-
-srun bash -c "${cmd}"
+    ${EVAL_AND_LOGGING_ARGS[@]}
