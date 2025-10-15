@@ -89,7 +89,7 @@ EVAL_AND_LOGGING_ARGS=(
 )
 
 
-cmd="torchrun ${DISTRIBUTED_ARGS[@]} pretrain_gpt.py \
+cmd="torchrun ${DISTRIBUTED_ARGS[@]} $SCRATCH/Megatron-LM/pretrain_gpt.py \
     ${GPT_MODEL_ARGS[@]} \
     ${TRAINING_ARGS[@]} \
     ${MODEL_PARALLEL_ARGS[@]} \
