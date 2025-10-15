@@ -8,6 +8,7 @@ unset PYTHONPATH
 module load pytorch/2.6.0
 
 pip install clearml
+pip install --no-build-isolation transformer_engine[pytorch]
 
 
 export CUDA_DEVICE_MAX_CONNECTIONS=1
@@ -81,7 +82,7 @@ EVAL_AND_LOGGING_ARGS=(
     --tensorboard-dir $TENSORBOARD_LOGS_PATH
 )
 
-torchrun ${DISTRIBUTED_ARGS[@]} ${SCRATCH}/Megatron-LM/pretrain_gpt.py \
+srun torchrun ${DISTRIBUTED_ARGS[@]} ${SCRATCH}/Megatron-LM/pretrain_gpt.py \
     ${GPT_MODEL_ARGS[@]} \
     ${TRAINING_ARGS[@]} \
     ${MODEL_PARALLEL_ARGS[@]} \
