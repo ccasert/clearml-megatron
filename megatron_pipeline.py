@@ -66,7 +66,20 @@ pipe.add_step(
 )
 
 
+#Step 3: tokenize
+pipe.add_step(
+    name='train',
+    parents=['tokenize_data'],
+    base_task_project='Megatron',
+    base_task_name='train-step',
+    pre_execute_callback=pre_execute_callback,
+    post_execute_callback=post_execute_callback,
+)
+
+
+
 # Start the pipeline
-pipe.start(queue = "muller")
+# pipe.start(queue = "muller")
+pipe.start_locally()
 
 print("Pipeline started!")

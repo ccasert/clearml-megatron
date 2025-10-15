@@ -1,17 +1,14 @@
 #!/bin/bash
-#SBATCH -A <your_account>
-#SBATCH -C gpu
-#SBATCH -q regular
-#SBATCH -t 00:30:00
-#SBATCH --nodes=4
-#SBATCH --ntasks-per-node=1
-#SBATCH --gpus-per-node=4
-#SBATCH --cpus-per-task=128
-#SBATCH --image=nersc/pytorch:25.02.01
-#SBATCH --module=gpu,nccl-plugin
-#SBATCH -J gpt3-train
-#SBATCH -o logs/gpt3_%j.out
-#SBATCH -e logs/gpt3_%j.err
+
+set -ex
+
+echo "Training step"
+
+unset PYTHONPATH
+module load pytorch/2.6.0
+
+pip install clearml
+
 
 export CUDA_DEVICE_MAX_CONNECTIONS=1
 export OMP_NUM_THREADS=1
@@ -92,4 +89,4 @@ cmd="torchrun ${DISTRIBUTED_ARGS[@]} pretrain_gpt.py \
 
 echo "${cmd}"
 
-srun shifter bash -c "${cmd}"
+srun bash -c "${cmd}"
