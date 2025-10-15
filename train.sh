@@ -28,7 +28,7 @@ mkdir -p ${CHECKPOINT_PATH}
 mkdir -p ${TENSORBOARD_LOGS_PATH}
 
 DISTRIBUTED_ARGS=(
-    --nproc_per_node=${SLURM_GPUS_PER_NODE}
+    --nproc_per_node=${SLURM_GPUS_PER_TASK}
     --nnodes=${SLURM_JOB_NUM_NODES}
     --rdzv-backend=c10d
     --rdzv-endpoint=${MASTER_ADDR}:${MASTER_PORT}
